@@ -1,0 +1,25 @@
+#!/bin/bash
+
+cd $(dirname $0)
+
+case "$1" in
+	start)
+		dtach -n ladyluck-dtach-socket ladyluck.pl
+		;;
+	stop)
+		killall ladyluck.pl
+		sleep 1
+		[ -e ladyluck-dtach-socket ] && rm ladyluck-dtach-socket
+		;;
+	restart)
+		$0 stop
+		$0 start
+		;;
+	console)
+		dtach -a ladyluck-dtach-socket
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|console}"
+esac
+
+
