@@ -8,6 +8,7 @@ our $VERSION = '5';
 sub init {
 	my $self = shift;
 	$self->config({user_nickserv_password => 'iamnotabot'});
+	#$self->config({user_nickserv_nick => 'LadyLuck'});
 }
 
 sub help {
@@ -19,6 +20,7 @@ sub admin {
 	my $body = $message->{body};
 	return unless defined($body);
 
+	#my $nick = $self->get('user_nickserv_nick');
 	my $nick = $self->bot->nick();
 	my $password = $self->get('user_nickserv_password');
 
@@ -31,6 +33,7 @@ sub told {
 	my $body = $message->{body};
 	return unless defined($body);
 
+	#my $nick = $self->get('user_nickserv_nick');
 	my $nick = $self->bot->nick();
 	my $password = $self->get('user_nickserv_password');
 
@@ -41,6 +44,7 @@ sub told {
 
 sub nick_change {
 	my ($self,$old_nick,$new_nick) = @_;
+	#my $nick = $self->get('user_nickserv_nick');
 	my $nick = $self->bot->nick();
 	return $self->bot->pocoirc->yield(nick => "$nick") if $old_nick eq $nick;
 }

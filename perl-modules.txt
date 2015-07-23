@@ -1,0 +1,11 @@
+common::sense
+App::Bot::BasicBot::Pluggable
+IRC::Utils
+Inline::Files
+Math::Calc::Units
+Math::SigFigs
+REST::Google::Search
+Text::ParseWords
+WWW::DuckDuckGo
+WWW::Google::Calculator
+WWW::Shorten

@@ -3,7 +3,7 @@ package Bot::BasicBot::Pluggable::Module::Say;
 use base qw(Bot::BasicBot::Pluggable::Module);
 use common::sense;
 
-our $VERSION = '3';
+our $VERSION = '1';
 
 sub help {
 	return "Speaks with the voice of the bot. Requires auth. Usage: !say <expression>, !do <action>";
