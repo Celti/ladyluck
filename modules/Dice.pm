@@ -5,7 +5,7 @@ use common::sense;
 use List::Util;
 use IRC::Utils qw(NORMAL BOLD RED GREEN);
 
-our $VERSION = '3';
+our $VERSION = '4';
 
 sub help {
 	return "Rolls dice: .{roll|iroll|rolls} #[x][+-*/]#d#[\',=][+-*/bw]#[vs]# (for more detail, see https://celti.name/wiki/ladyluck)";
@@ -31,6 +31,9 @@ sub told {
 	return help() if $arguments =~ /^help$/i;
 	return "♫ Never gonna give you up! / Never gonna let you down! ♫" if $arguments =~ /^rick$/i;
 	return "♪ So get out there and rock / and roll the bones ♪" if $arguments =~ /^the bones$/i;
+
+	# Ugly hack because people want to be able to do '.roll vs 10'
+	$arguments = '3d ' . $arguments if $arguments =~ /^\s*vs/i;
 
 	@segments = ( $arguments =~ / ( (?: [-+*x\/\\])?\s*
 	                            (?:\d+[*x])?
