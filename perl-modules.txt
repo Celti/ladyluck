@@ -9,3 +9,4 @@ Text::ParseWords
 WWW::DuckDuckGo
 WWW::Google::Calculator
 WWW::Shorten
+LWP::JSON::Tiny
