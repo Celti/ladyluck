@@ -15,23 +15,21 @@ sub told {
 	my ($self,$message) = @_;
 	my $body = $message->{body};
 	return unless defined($body);
-	my ($command,$arguments) = split(/\s+/, $body, 2);
-	$command = lc($command);
+	return unless $body =~ /^(?:!|\.)fake\s*(m(?:ale)?|f(?:emale)?)?\s*(rare|common|any)?$/i;
 
-	return unless $command =~ /^(?:!|\.)fake\s*(m(?:ale)?|f(?:emale)?)?\s*(rare|common|any)?$/i;
 	my $gender = $1;
 	my $rarity = $2;
 	my $type;
 	my $min;
 	my $max;
 
-	for $gender {
-		when (/m/) { $type = 'male'; }
-		when (/f/) { $type = 'female'; }
+	for ($gender) {
+		when (/f|female/) { $type = 'female'; }
+		when (/m|male/) { $type = 'male'; }
 		default    { $type = 'both'; }
 	}
 
-	for $rarity {
+	for ($rarity) {
 		when (/rare/)   { $min = 50; $max = 100; }
 		when (/common/) { $min = 1;  $max = 25;  }
 		when (/any/)    { $min = 1;  $max = 100; }
@@ -41,10 +39,10 @@ sub told {
 
 	my $url = URI->new('http://namey.muffinlabs.com/name.json');
 	$url->query_form(
-		type = $type;
-		with_surname = 'true';
-		min_freq = $min;
-		max_freq = $max;
+		with_surname => 'true',
+		type         => $type,
+		min_freq     => $min,
+		max_freq     => $max,
 	);
 
 	my $ua = LWP::UserAgent::JSON->new;
