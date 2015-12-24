@@ -5,5 +5,6 @@ use common::sense;
 use local::lib 'extlib';
 use App::Bot::BasicBot::Pluggable;
 
+$0 = 'ladyluck';
 my $app = App::Bot::BasicBot::Pluggable->new_with_options(configfile => 'ladyluck.yaml');
 $app->run();
