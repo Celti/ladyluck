@@ -2,11 +2,12 @@ common::sense
 App::Bot::BasicBot::Pluggable
 IRC::Utils
 Inline::Files
+LWP::JSON::Tiny
 Math::Calc::Units
+Math::Random::Secure
 Math::SigFigs
 REST::Google::Search
 Text::ParseWords
 WWW::DuckDuckGo
 WWW::Google::Calculator
 WWW::Shorten
-LWP::JSON::Tiny
