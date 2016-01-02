@@ -3,9 +3,10 @@ package Bot::BasicBot::Pluggable::Module::Kitty;
 use base qw(Bot::BasicBot::Pluggable::Module);
 use common::sense;
 use LWP::UserAgent;
+use HTTP::Request::Common;
 use URI;
 
-our $VERSION = '1';
+our $VERSION = '2';
 
 sub help {
 	return "Returns an appropriate response. Usage: .kitty";
@@ -28,8 +29,8 @@ sub told {
 
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("LadyLuck IRC Bot/2.0");
-	my $response = $ua->head($url);
-	my $kitty = $response->request()->uri();
+	my $response = $ua->simple_request(HEAD $url);
+	my $kitty = $response->header('Location');
 
 	return "Kitty! $kitty";
 }
