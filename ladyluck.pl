@@ -1,8 +1,10 @@
 #!/usr/bin/env perl
 # LadyLuck v2, by Celti
 
-use common::sense;
+use lib '.';
 use local::lib 'extlib';
+
+use common::sense;
 use App::Bot::BasicBot::Pluggable;
 
 $0 = 'ladyluck';
