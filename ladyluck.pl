@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # LadyLuck v2, by Celti
 
-use lib '.';
+use lib 'lib';
 use local::lib 'extlib';
 
 use common::sense;
