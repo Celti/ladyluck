@@ -4,8 +4,9 @@ use base qw(Bot::BasicBot::Pluggable::Module);
 use common::sense;
 use List::Util;
 use IRC::Utils qw(NORMAL BOLD RED GREEN);
+use Math::Random::Secure qw(irand);
 
-our $VERSION = '4';
+our $VERSION = '6';
 
 sub help {
 	return "Rolls dice: .{roll|iroll|rolls} #[x][+-*/]#d#[\',=][+-*/bw]#[vs]# (for more detail, see https://celti.name/wiki/ladyluck)";
@@ -40,7 +41,7 @@ sub told {
 	                            (?: (?>\d+)? d (?:\d+|f|%) | (?>\d+) d (?:\d+|f|%)? )
 	                            (?: ['.,=] )?
 	                            (?:[-+*x\/\\bw](?>\d+))?
-	                            (?:\s*vs?\s*(?:\D*)(?>\d+))?
+	                            (?:\s*vs?\s*(?:.*?)[\s-](?:-?\d+))?
 	                            (?!d) ) /xig
 	); # Take off every xig?
 
@@ -53,7 +54,7 @@ sub told {
 		          (\d+)? d (\d+|f|%)?
 		          ( ['.,=] )?
 		          (?: ([-+*x\/\\bw]) (\d*) )?
-		          (?: \s* (vs?) \s* (\D*)? ((?:(?<=[\s-]))?\d+) )? /xi;
+		          (?: \s* (vs?) \s* (?: (.*?) [\s-] )? (-?\d+) )? /xi;
 		
 		my $die = {
 			segmod    => $1,
@@ -217,22 +218,22 @@ sub roll_dice {
 	$die->{total} = 0;
 	
 	for ( my $i = 0 ; $i < $die->{numdice} ; $i++ ) {
-		push @{ $die->{rolls} }, 1 + int rand $die->{numsides};
+		push @{ $die->{rolls} }, 1 + irand $die->{numsides};
 	}
 	
 	if ( defined $die->{rolltype} ) {
 		if ( $die->{rolltype} eq '\'' ) { # Explode high
 			foreach ( @{ $die->{rolls} } ) {
-				push( @{ $die->{rolls} }, 1 + int rand $die->{numsides} ) if $_ == $die->{numsides};
+				push( @{ $die->{rolls} }, 1 + irand $die->{numsides} ) if $_ == $die->{numsides};
 			}
 		} elsif ( $die->{rolltype} eq ',' || $die->{rolltype} eq '.' ) { # Explode low
 			foreach ( @{ $die->{rolls} } ) {
-				push( @{ $die->{rolls} }, 1 + int rand $die->{numsides} ) if ( $_ eq 1 );
+				push( @{ $die->{rolls} }, 1 + irand $die->{numsides} ) if ( $_ eq 1 );
 				$_ = 0 - $die->{numsides} if ( $_ eq 1 );
 			}
 		} elsif ( $die->{rolltype} eq '=' ) { # Explode
 			foreach ( @{ $die->{rolls} } ) {
-				push( @{ $die->{rolls} }, 1 + int rand $die->{numsides} ) if ( $_ eq $die->{numsides} || $_ eq 1 );
+				push( @{ $die->{rolls} }, 1 + irand $die->{numsides} ) if ( $_ eq $die->{numsides} || $_ eq 1 );
 				$_ = 0 - $die->{numsides} if ( $_ eq 1 );
 			}
 		}
