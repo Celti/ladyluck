@@ -12,6 +12,7 @@ sub help {
 }
 
 sub init {
+	my $self = shift;
 	open ($monitor, ">>", $self->bot->nick() . "monitor.log")
 		or die "Couldn't open logfile.\n";
 	binmode ($monitor, ':unix');
