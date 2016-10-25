@@ -14,5 +14,6 @@ my $bot = Bot::BasicBot::Pluggable::WithConfig->new_with_config(
 	config => $config,
 );
 
+$bot->load("Auth");
 $bot->load("Loader");
 $bot->run();

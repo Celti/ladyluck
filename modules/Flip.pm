@@ -18,6 +18,7 @@ sub told {
 
 	if ($1 eq 'flip') {
 		return '(╯°□°)╯ ︵ ┻━┻' if $arguments =~ /^table$/i;
+		return '┬──┬╯︵ /(.□. \）' if $arguments =~ /^(?:soviet|russia)/i;
 		return '(╯°□°)╯ ︵ /(.□.\)' if $self->bot->pocoirc->is_channel_member($message->{channel}, $arguments);
 		return "Edge!" unless int rand 100;
 		return int rand 2 ? "Heads!" : "Tails!";
