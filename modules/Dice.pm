@@ -6,7 +6,12 @@ use List::Util;
 use IRC::Utils qw(NORMAL BOLD RED GREEN);
 use Math::Random::Secure qw(irand);
 
-our $VERSION = '6';
+our $VERSION = '7';
+
+sub init {
+	my $self = shift;
+	$self->config({user_dice_colours => 1});
+}
 
 sub help {
 	return "Rolls dice: .{roll|iroll|rolls} #[x][+-*/]#d#[\',=][+-*/bw]#[vs]# (for more detail, see https://celti.name/wiki/ladyluck)";
@@ -25,7 +30,7 @@ sub told {
 	my $showrolls  = $1 eq 'iroll' ? 1 : 0;
 	my $showtotals = $1 eq 'rolls' ? 0 : 1;
 	my $showdice   = 1;
-	my $colors     = 1;
+	my $colors     = $self->get('user_dice_colours');
 
 	my ($final, $total, @dice, @segments);
 

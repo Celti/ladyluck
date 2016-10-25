@@ -13,7 +13,7 @@ sub help {
 
 sub init {
 	my $self = shift;
-	open ($monitor, ">>", $self->bot->nick() . "monitor.log")
+	open ($monitor, ">>", $self->bot->nick() . "-monitor.log")
 		or die "Couldn't open logfile.\n";
 	binmode ($monitor, ':unix');
 	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " Opening log.";
