@@ -5,6 +5,7 @@ use common::sense;
 use POSIX qw(strftime);
 
 our $VERSION = '1';
+our $monitor;
 
 sub help {
 	return "Monitors the bot's internal state. Requires auth.";
