@@ -4,7 +4,7 @@ our $VERSION = '1';
 
 use common::sense;
 use base qw(Bot::BasicBot::Pluggable::Module);
-use IRC::Utils qw(NORMAL BOLD ITALIC strip_color);
+use IRC::Utils qw(NORMAL BOLD ITALIC strip_formatting);
 use POSIX qw(fmod);
 
 sub init {
@@ -70,7 +70,7 @@ sub told {
 
 	my $return = sprintf(BOLD."ST".NORMAL." %s: ".BOLD."Basic Lift".NORMAL." %s; ".BOLD."Damage".NORMAL." ".ITALIC."Thr".NORMAL." %sd%s, ".ITALIC."Sw".NORMAL." %sd%s\n", $ST, $basic_lift, int($thrust), $thrust_adds, int($swing), $swing_adds);
 
-	return strip_color($return) unless $self->get('user_st_colours');
+	return strip_formatting($return) unless $self->get('user_st_colours');
 	return $return;
 }
 

@@ -4,7 +4,7 @@ our $VERSION = '3';
 
 use common::sense;
 use base qw(Bot::BasicBot::Pluggable::Module);
-use IRC::Utils qw(NORMAL BOLD ITALIC strip_color);
+use IRC::Utils qw(NORMAL BOLD ITALIC strip_formatting);
 
 sub init {
 	my $self = shift;
@@ -126,8 +126,8 @@ sub told {
 	}
 
 	unless ($self->get('user_hit_colours')) {
-		$self->bot->say({%$message, body => strip_color("$message->{who}: $priroll (3d): $priresult")});
-		$self->bot->say({%$message, body => strip_color("$message->{who}: $subroll (1d): $subresult")});
+		$self->bot->say({%$message, body => strip_formatting("$message->{who}: $priroll (3d): $priresult")});
+		$self->bot->say({%$message, body => strip_formatting("$message->{who}: $subroll (1d): $subresult")});
 		return;
 	}
 
