@@ -1,5 +1,6 @@
 common::sense
 Bot::BasicBot::Pluggable::WithConfig
+POE::Component::SSLify
 HTTP::Request::Common
 IRC::Utils
 Inline::Files
