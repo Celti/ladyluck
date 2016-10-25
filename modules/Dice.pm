@@ -111,20 +111,18 @@ sub told {
 		$die->{output} = ' ';
 		
 		if ($showdice) {
-			# $die->{output} .= GREY if defined $colors;
 			$die->{output} .= $die->{segmod} if defined $die->{segmod};
 			$die->{output} .= $die->{numdice} . 'd';
 			$die->{output} .= $die->{fudge} ? 'F' : $die->{numsides};
 			$die->{output} .= $die->{rolltype} if defined $die->{rolltype};
 			$die->{output} .= $die->{diemod} . $die->{modval} if defined $die->{modval};
 			$die->{output} .= ' vs ' . $die->{skill} if defined $die->{versus};
-			# $die->{output} .= NORMAL if defined $colors;
 		}
 
 		if ($showtotals) {
-			$die->{output} .= BOLD if defined $colors;
+			$die->{output} .= BOLD if $colors == 1;
 			$die->{output} .= ': ' . $die->{total};
-			$die->{output} .= NORMAL if defined $colors;
+			$die->{output} .= NORMAL if $colors == 1;
 		}
 		
 		if ( ( $showrolls && @{ $die->{rolls} } ) or not $showtotals ) {
@@ -148,27 +146,27 @@ sub told {
 			$die->{margin} = $die->{skill} - $die->{total};
 			$die->{output} .= ', ';
 			if (($die->{total} < 7) and (($die->{total} < 5) or ($die->{skill} > 14 and $die->{total} < 6) or ($die->{skill} > 15 and $die->{total} < 7))) {
-				$die->{output} .= BOLD . GREEN if defined $colors;
+				$die->{output} .= BOLD . GREEN if $colors == 1;
 				$die->{output} .= 'CRITICAL SUCCESS: ' . ( $die->{margin} == abs($die->{margin}) ? 'Success' : 'Failure' ) . ' by ' . abs($die->{margin});
-				$die->{output} .= NORMAL if defined $colors;
+				$die->{output} .= NORMAL if $colors == 1;
 			} elsif ($die->{total} > 16 or $die->{margin} < -9) {
 				if ($die->{skill} > 15 and $die->{total} == 17) {
-					$die->{output} .= RED if defined $colors;
+					$die->{output} .= RED if $colors == 1;
 					$die->{output} .= 'AUTOMATIC FAILURE: ' . ( $die->{margin} == abs($die->{margin}) ? 'Success' : 'Failure' ) . ' by ' . abs($die->{margin});
-					$die->{output} .= NORMAL if defined $colors;
+					$die->{output} .= NORMAL if $colors == 1;
 				} else {
-					$die->{output} .= BOLD . RED if defined $colors;
+					$die->{output} .= BOLD . RED if $colors == 1;
 					$die->{output} .= 'CRITICAL FAILURE: ' . ( $die->{margin} == abs($die->{margin}) ? 'Success' : 'Failure' ) . ' by ' . abs($die->{margin});
-					$die->{output} .= NORMAL if defined $colors;
+					$die->{output} .= NORMAL if $colors == 1;
 				}
 			} elsif ($die->{margin} >= 0) {
-				$die->{output} .= GREEN if defined $colors;
+				$die->{output} .= GREEN if $colors == 1;
 				$die->{output} .= 'Success by ' . abs($die->{margin});
-				$die->{output} .= NORMAL if defined $colors;
+				$die->{output} .= NORMAL if $colors == 1;
 			} else {
-				$die->{output} .= RED if defined $colors;
+				$die->{output} .= RED if $colors == 1;
 				$die->{output} .= 'Failure by ' . abs($die->{margin});
-				$die->{output} .= NORMAL if defined $colors;
+				$die->{output} .= NORMAL if $colors == 1;
 			}
 		}
 
@@ -176,13 +174,13 @@ sub told {
 			$die->{margin} = $die->{total} - $die->{skill};
 			$die->{output} .= ', ';
 			if ($die->{skill} <= $die->{total}) {
-				$die->{output} .= GREEN if defined $colors;
+				$die->{output} .= GREEN if $colors == 1;
 				$die->{output} .= 'Success by ' . abs($die->{margin});
-				$die->{output} .= NORMAL if defined $colors;
+				$die->{output} .= NORMAL if $colors == 1;
 			} else { 
-				$die->{output} .= RED if defined $colors;
+				$die->{output} .= RED if $colors == 1;
 				$die->{output} .= 'Failure by ' . abs($die->{margin});
-				$die->{output} .= NORMAL if defined $colors;
+				$die->{output} .= NORMAL if $colors == 1;
 			}
 		}
 
@@ -190,13 +188,13 @@ sub told {
 			$die->{margin} = $die->{total} - $die->{skill};
 			$die->{output} .= ', ';
 			if ($die->{total} <= $die->{skill}) {
-				$die->{output} .= GREEN if defined $colors;
+				$die->{output} .= GREEN if $colors == 1;
 				$die->{output} .= 'Success by ' . abs($die->{margin});
-				$die->{output} .= NORMAL if defined $colors;
+				$die->{output} .= NORMAL if $colors == 1;
 			} else { 
-				$die->{output} .= RED if defined $colors;
+				$die->{output} .= RED if $colors == 1;
 				$die->{output} .= 'Failure by ' . abs($die->{margin});
-				$die->{output} .= NORMAL if defined $colors;
+				$die->{output} .= NORMAL if $colors == 1;
 			}
 		}
 	}
@@ -206,9 +204,9 @@ sub told {
 	
 	if (List::Util::first { defined($_->{segmod}) } @dice) {
 		$final .= '; Total: ';
-		$final .= BOLD if defined $colors;
+		$final .= BOLD if $colors == 1;
 		$final .= $total;
-		$final .= NORMAL if defined $colors;
+		$final .= NORMAL if $colors == 1;
 	}
 	
 	return "$message->{who} rolled too many dice and some dropped off the table." if (length($final) > 400);
