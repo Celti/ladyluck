@@ -125,14 +125,11 @@ sub told {
 		}
 	}
 
-	unless $self->get('user_hit_colours') {
-		$priresult = strip_color($priresult);
-		$subresult = strip_color($subresult);
-	}
 
-	$self->bot->say({%$message, body => "$message->{who}: $priroll (3d): $priresult"});
-	$self->bot->say({%$message, body => "$message->{who}: $subroll (1d): $subresult"});
-	return;
+	my $return = "$message->{who}: $priroll (3d): $priresult\n$message->{who}: $subroll (1d): $subresult";
+
+	return strip_color($return) unless $self->get('user_hit_colours');
+	return $return;
 }
 
 1;
