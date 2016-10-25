@@ -5,7 +5,7 @@ use common::sense;
 use POSIX qw(strftime);
 
 our $VERSION = '3';
-our $monitor;
+our MONITOR;
 
 sub help {
 	return "Monitors the bot's internal state. Requires auth.";
@@ -14,28 +14,29 @@ sub help {
 sub init {
 	my $self = shift;
 
-	$self->config({user_monitor_log => './monitor.log'});
+	$self->config({user_monitor_log => 'monitor.log'});
 
-	open ($monitor, ">>", $self->get('user_monitor_log'))
+	open (MONITOR, ">>", $self->get('user_monitor_log'))
 		or die "Couldn't open logfile.\n";
-	binmode ($monitor, ':unix');
-	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " Opening log.";
+
+	binmode (MONITOR, ':unix');
+	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " Opening log.";
 }
 
 sub stop {
-	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " Closing log.";
-	close $monitor;
+	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " Closing log.";
+	close MONITOR;
 }
 
 sub seen {
 	my ($self,$message) = @_;
-	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: <$message->{who}> $message->{body}";
+	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: <$message->{who}> $message->{body}";
 }
 
 sub emoted {
 	my ($self, $message, $priority) = @_;
 	return unless $priority == 0;
-	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: * $message->{who} $message->{body}";
+	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: * $message->{who} $message->{body}";
 }
 
 sub told {
