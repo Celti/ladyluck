@@ -4,19 +4,12 @@ our $VERSION = '1';
 
 use common::sense;
 use base qw(Bot::BasicBot::Pluggable::Module);
+use IRC::Utils qw(NORMAL BOLD ITALIC strip_color);
 use POSIX qw(fmod);
 
 sub init {
 	my $self = shift;
 	$self->config({user_st_colours => 1});
-
-	if $self->get('user_st_colours') == 1 {
-		use IRC::Utils qw(NORMAL BOLD ITALIC);
-	} else {
-		use constant NORMAL => '';
-		use constant BOLD   => '';
-		use constant ITALIC => '';
-	}
 }
 
 sub help {
@@ -75,7 +68,10 @@ sub told {
 		}
 	}
 
-	return sprintf(BOLD."ST".NORMAL." %s: ".BOLD."Basic Lift".NORMAL." %s; ".BOLD."Damage".NORMAL." ".ITALIC."Thr".NORMAL." %sd%s, ".ITALIC."Sw".NORMAL." %sd%s\n", $ST, $basic_lift, int($thrust), $thrust_adds, int($swing), $swing_adds);
+	my $return = sprintf(BOLD."ST".NORMAL." %s: ".BOLD."Basic Lift".NORMAL." %s; ".BOLD."Damage".NORMAL." ".ITALIC."Thr".NORMAL." %sd%s, ".ITALIC."Sw".NORMAL." %sd%s\n", $ST, $basic_lift, int($thrust), $thrust_adds, int($swing), $swing_adds);
+
+	return strip_color($return) unless $self->get('user_st_colours');
+	return $return;
 }
 
 1;

@@ -1,21 +1,14 @@
 package Bot::BasicBot::Pluggable::Module::GURPS::Hit;
 
-our $VERSION = '4';
+our $VERSION = '3';
 
 use common::sense;
 use base qw(Bot::BasicBot::Pluggable::Module);
+use IRC::Utils qw(NORMAL BOLD ITALIC strip_color);
 
 sub init {
 	my $self = shift;
 	$self->config({user_hit_colours => 1});
-
-	if $self->get('user_hit_colours') == 1 {
-		use IRC::Utils qw(NORMAL BOLD ITALIC);
-	} else {
-		use constant NORMAL => '';
-		use constant BOLD   => '';
-		use constant ITALIC => '';
-	}
 }
 
 sub help {
@@ -130,6 +123,11 @@ sub told {
 				when ([2, 3, 4, 5, 6]) { $subresult = $locations{'none'}; }
 			}
 		}
+	}
+
+	unless $self->get('user_hit_colours') {
+		$priresult = strip_color($priresult);
+		$subresult = strip_color($subresult);
 	}
 
 	$self->bot->say({%$message, body => "$message->{who}: $priroll (3d): $priresult"});
