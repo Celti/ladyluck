@@ -11,25 +11,26 @@ sub help {
 }
 
 sub init {
-	open (MONITOR, ">>", "monitor.log") or die "Couldn't open monitor.log.\n";
-	binmode (MONITOR, ':unix');
-	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " Opening log.";
+	open ($monitor, ">>", $self->bot->nick() . "monitor.log")
+		or die "Couldn't open logfile.\n";
+	binmode ($monitor, ':unix');
+	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " Opening log.";
 }
 
 sub stop {
-	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " Closing log.";
-	close MONITOR;
+	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " Closing log.";
+	close $monitor;
 }
 
 sub seen {
 	my ($self,$message) = @_;
-	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: <$message->{who}> $message->{body}";
+	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: <$message->{who}> $message->{body}";
 }
 
 sub emoted {
 	my ($self, $message, $priority) = @_;
 	return unless $priority == 0;
-	say MONITOR strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: * $message->{who} $message->{body}";
+	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " $message->{channel}: * $message->{who} $message->{body}";
 }
 
 sub told {
