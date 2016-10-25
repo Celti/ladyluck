@@ -1,10 +1,21 @@
 package Bot::BasicBot::Pluggable::Module::GURPS::Hit;
 
-our $VERSION = '3';
+our $VERSION = '4';
 
 use common::sense;
 use base qw(Bot::BasicBot::Pluggable::Module);
 use IRC::Utils qw(NORMAL BOLD ITALIC);
+
+sub init {
+	my $self = shift;
+	$self->config({user_hit_colours => 1});
+
+	unless $self->get('user_hit_colours') {
+		use constant NORMAL => '';
+		use constant BOLD   => '';
+		use constant ITALIC => '';
+	}
+}
 
 sub help {
 	return "Generates a random humanoid hit location and returns the relevant optional rules.";

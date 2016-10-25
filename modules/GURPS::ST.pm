@@ -7,6 +7,17 @@ use base qw(Bot::BasicBot::Pluggable::Module);
 use IRC::Utils qw(NORMAL BOLD ITALIC);
 use POSIX qw(fmod);
 
+sub init {
+	my $self = shift;
+	$self->config({user_st_colours => 1});
+
+	unless $self->get('user_st_colours') {
+		use constant NORMAL => '';
+		use constant BOLD   => '';
+		use constant ITALIC => '';
+	}
+}
+
 sub help {
 	return "Calculates Basic Lift and Damage for a given ST.";
 }
