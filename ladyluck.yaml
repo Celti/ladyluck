@@ -1,12 +1,15 @@
 %YAML 1.1  # Configuration file for LadyLuck.
 ---
-charset: utf8
-server: irc.sorcery.net
+charset: utf-8
+loglevel: warn
+server: localhost.localdomain
+port: 6697
+ssl: 1
+username: Lady_Luck
 nick: Lady_Luck
-password: iamnotabot
-channel:
+name: 'The million-to-one chance.'
+channels:
    - '#ladyluck'
 store:
    type: Deep
    file: ladyluck.deep
-loglevel: warn
