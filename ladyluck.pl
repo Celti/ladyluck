@@ -1,12 +1,16 @@
 #!/usr/bin/env perl
-# LadyLuck v2, by Celti
+# LadyLuck v3, by Celti
 
 use lib 'lib';
 use local::lib 'extlib';
 
 use common::sense;
-use App::Bot::BasicBot::Pluggable;
+use Bot::BasicBot::Pluggable::WithConfig;
 
-$0 = 'ladyluck';
-my $app = App::Bot::BasicBot::Pluggable->new_with_options(configfile => 'ladyluck.yaml');
-$app->run();
+my $config = $ARGV[0]
+	// die("Please specify a config file, e.g.: $0 ladyluck.yaml");
+
+my $bot = Bot::BasicBot::Pluggable->new_with_config(config => $config);
+
+$bot->load("Loader");
+$bot->run();

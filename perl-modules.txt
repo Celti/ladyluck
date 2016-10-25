@@ -1,5 +1,5 @@
 common::sense
-App::Bot::BasicBot::Pluggable
+Bot::BasicBot::Pluggable::WithConfig
 HTTP::Request::Common
 IRC::Utils
 Inline::Files
