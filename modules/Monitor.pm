@@ -4,7 +4,7 @@ use base qw(Bot::BasicBot::Pluggable::Module);
 use common::sense;
 use POSIX qw(strftime);
 
-our $VERSION = '1';
+our $VERSION = '3';
 our $monitor;
 
 sub help {
@@ -13,7 +13,10 @@ sub help {
 
 sub init {
 	my $self = shift;
-	open ($monitor, ">>", $self->bot->nik() . "@" . $self->bot->server() . "-monitor.log")
+
+	$self->config({user_monitor_log => './monitor.log'});
+
+	open ($monitor, ">>", $self->get('user_monitor_log'))
 		or die "Couldn't open logfile.\n";
 	binmode ($monitor, ':unix');
 	say $monitor strftime('%a, %d %b %Y %T %z', localtime), " Opening log.";
