@@ -5,9 +5,8 @@ use lib 'lib';
 use local::lib 'extlib';
 
 use common::sense;
+use Bot::BasicBot::Pluggable;
 use Bot::BasicBot::Pluggable::WithConfig;
-
-no strict 'refs';
 
 my $config = $ARGV[0]
 	// die("Please specify a config file, e.g.: $0 ladyluck.yaml");
