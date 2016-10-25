@@ -4,14 +4,15 @@ our $VERSION = '1';
 
 use common::sense;
 use base qw(Bot::BasicBot::Pluggable::Module);
-use IRC::Utils qw(NORMAL BOLD ITALIC);
 use POSIX qw(fmod);
 
 sub init {
 	my $self = shift;
 	$self->config({user_st_colours => 1});
 
-	unless $self->get('user_st_colours') {
+	if $self->get('user_st_colours') == 1 {
+		use IRC::Utils qw(NORMAL BOLD ITALIC);
+	} else {
 		use constant NORMAL => '';
 		use constant BOLD   => '';
 		use constant ITALIC => '';
